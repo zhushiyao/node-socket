@@ -1,0 +1,41 @@
+.number-item{
+  background: url('../img/frame@2x.png') no-repeat;
+  background-size: cover;
+  height: 500px;
+  width: 380px;
+  display: flex;
+  text-align: center;
+  font-size: 380px;
+  align-items: center;
+  justify-content: center;
+  font-family: pingFangHeavy;
+  color: #0F2953;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+}
+.props-number{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: -500px;
+}
+.state-number{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+}
+.change-animation{
+  animation: move 1s linear
+}
+
+@keyframes move {
+  0% {
+    transform: translate(0,0)
+  }
+ 
+  100% {
+    transform: translate(0, 100%)
+  }
+}
