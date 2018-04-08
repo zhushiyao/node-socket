@@ -7,7 +7,7 @@ var webpack = require('webpack');
 var webpackConfig = require('./webpack.config');
 var compiler = webpack(webpackConfig);
 var requestApi = require('./src/node/api');
-
+var store = require('./src/node/store');
 
 app.use(express.static(path.join(__dirname, '/')));
 console.log(process.env.MODE)
@@ -32,20 +32,21 @@ io.on('connection', function (socket) {
   socket.on('clentMessage', function (msg) {
     console.log('clentMessage:', msg);
   })
+  //用户连接后，发送最新的数据
+  
   socket.emit('change', {
-    message: 'change init',
-    name: 'ser'
+    people: store.peopleSum,
+    round: store.orderCount
   })
-
   // setInterval(function(){
   //   socket.emit('change', {
   //     people: new Date().getTime(),
   //     round: new Date().getTime()
   //   })
   // }, 3000);
-  requestApi(socket);
+  
 });
-
+requestApi(io);
 
 //设置监听
 server.listen(8500, function () {

@@ -1,23 +1,16 @@
-const webpack = require('webpack');
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+var webpack = require('webpack');
+var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ImageminPlugin = require('imagemin-webpack-plugin').default;
+var MODE = process.env.NODE_ENV;
+
+var CONFIG = MODE == 'development' ? require('./webpack.dev.config') : require('./webpack.prd.config');
 
 module.exports = {
-  entry: [
-    'webpack-hot-middleware/client?reload=true',
-    './app.js'
-  ],
-  output: { //出口
-    path: path.resolve(__dirname, 'asset'), //line
-    // path: path.resolve(__dirname, '/'), //dev
-    filename: 'bundle.js',
-    // filename: 'bundle.[hash].js',
-    // chunkFileName: 'bundle.[chunkhash].js',
-    publicPath: 'asset/' //line
-    // publicPath: '/' //dev
-  },
+  entry: CONFIG.entry,
+  output: CONFIG.output,
   // debug: true,
-  mode: 'development',
+  mode: CONFIG.mode,
   module: {
     rules: [{
         test: /\.(js|jsx)$/, //处理文件的正则，匹配js|jsx,
@@ -58,9 +51,15 @@ module.exports = {
     //     warnings: false
     //   }
     // })
+    new ImageminPlugin({
+      disable: process.env.NODE_ENV !== 'production', // Disable during development
+      pngquant: {
+        quality: '95-100'
+      }
+    })
   ],
   //由于压缩后的代码不易于定位错误，配置该项后发生错误时即可采用source-map的形式直接显示你出错代码的位置  
-  devtool: 'source-map',
+  devtool: CONFIG.devtool,
   //其它解决方案配置  
   resolve: {
     // 配置简写，配置过后，书写该文件路径的时候可以省略文件后缀。如require("common")  
