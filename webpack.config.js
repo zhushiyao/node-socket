@@ -8,10 +8,11 @@ module.exports = {
     './app.js'
   ],
   output: { //出口
-    path: path.resolve(__dirname, 'dist'),
-    // filename: '[name].bundle.js'
+    path: path.resolve(__dirname, 'asset'),
     filename: 'bundle.js',
-    publicPath: '/'
+    // filename: 'bundle.[hash].js',
+    // chunkFileName: 'bundle.[chunkhash].js',
+    publicPath: '/asset'
   },
   // debug: true,
   mode: 'development',

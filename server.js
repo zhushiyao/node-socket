@@ -9,17 +9,15 @@ var compiler = webpack(webpackConfig);
 var requestApi = require('./src/node/api');
 
 
-
-
-
 app.use(express.static(path.join(__dirname, '/')));
-
-app.use(require('webpack-dev-middleware')(compiler, {
-  noInfo: true,
-  publicPath: webpackConfig.output.publicPath
-}));
-
-app.use(require('webpack-hot-middleware')(compiler));
+console.log(process.env.MODE)
+if(process.env.NODE_ENV == 'development'){
+  app.use(require('webpack-dev-middleware')(compiler, {
+    noInfo: true,
+    publicPath: webpackConfig.output.publicPath
+  }));
+  app.use(require('webpack-hot-middleware')(compiler));
+}
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
@@ -39,13 +37,13 @@ io.on('connection', function (socket) {
     name: 'ser'
   })
 
-  setInterval(function(){
-    socket.emit('change', {
-      people: new Date().getTime(),
-      round: new Date().getTime()
-    })
-  }, 3000);
-  // requestApi(socket);
+  // setInterval(function(){
+  //   socket.emit('change', {
+  //     people: new Date().getTime(),
+  //     round: new Date().getTime()
+  //   })
+  // }, 3000);
+  requestApi(socket);
 });
 
 
