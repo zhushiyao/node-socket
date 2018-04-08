@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ImageminPlugin = require('imagemin-webpack-plugin').default;
+// var ImageminPlugin = require('imagemin-webpack-plugin').default;
 var MODE = process.env.NODE_ENV;
 
 var CONFIG = MODE == 'development' ? require('./webpack.dev.config') : require('./webpack.prd.config');
@@ -51,12 +51,12 @@ module.exports = {
     //     warnings: false
     //   }
     // })
-    new ImageminPlugin({
-      disable: process.env.NODE_ENV !== 'production', // Disable during development
-      pngquant: {
-        quality: '95-100'
-      }
-    })
+    // new ImageminPlugin({
+    //   disable: process.env.NODE_ENV !== 'production', // Disable during development
+    //   pngquant: {
+    //     quality: '95-100'
+    //   }
+    // })
   ],
   //由于压缩后的代码不易于定位错误，配置该项后发生错误时即可采用source-map的形式直接显示你出错代码的位置  
   devtool: CONFIG.devtool,
