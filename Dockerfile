@@ -9,6 +9,8 @@ ADD .babelrc /root
 ADD index.html /root/index.html 
 ADD package.json /root/package.json
 ADD webpack.config.js /root/webpack.config.js 
+ADD webpack.dev.config.js /root/webpack.dev.config.js 
+ADD webpack.prd.config.js /root/webpack.prd.config.js 
 
 WORKDIR /root 
 
