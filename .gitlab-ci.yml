@@ -1,0 +1,23 @@
+stages:
+  - docker-build
+before_script:
+  - >-
+    dockerservice=registry.docker.quancheng-ec.com:5000/syt-statis:`TZ=CST-8 date
+    '+%Y%m%d-%H%M'`
+  - hostname -i
+  - whoami
+build_images:
+  stage: docker-build
+  script:
+    - docker -v 
+    - echo $image
+    - >-
+      if [ "`docker images | awk '/^registry.docker.quancheng-ec.com:5000/ {
+      print $3 }'`" ]; then docker rmi -f $(docker images | awk
+      '/^registry.docker.quancheng-ec.com:5000/ { print $3 }' ); fi
+    - echo "Build Docker Image..."
+    - docker build --pull --no-cache --build-arg region=$region --build-arg accessKeyId=$accessKeyId --build-arg accessKeySecret=$accessKeySecret --build-arg bucket=$bucket -t $dockerservice .
+    - 'echo "Push Image:" $dockerservice " to repository..."'
+    - docker push $dockerservice
+  only:
+    - master
