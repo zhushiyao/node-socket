@@ -41,11 +41,16 @@ module.exports = function (socket) {
           var newOrderCount = parseInt(data.orderCount || 0);
           var newPeopleSum = parseInt(data.peopleSum || 0);
           console.log(newOrderCount, newPeopleSum)
+          console.log(orderCount, peopleSum)
+          socket.emit('change', {
+            people: newPeopleSum,
+            round: newOrderCount
+          })
           if (newOrderCount != orderCount || newPeopleSum != peopleSum) {
-            socket.emit('change', {
-              people: newPeopleSum,
-              round: newOrderCount
-            })
+            // socket.emit('change', {
+            //   people: newPeopleSum,
+            //   round: newOrderCount
+            // })
             orderCount = newOrderCount;
             peopleSum = newPeopleSum;
           }

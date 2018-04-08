@@ -7,6 +7,9 @@ export default class Title extends React.Component {
   }
 
   render(){
+    window
+    let height = window.screen.height;
+    let width = window.screen.width;
     return (
       <div className="title">
         <h1>全程网络2018</h1>
